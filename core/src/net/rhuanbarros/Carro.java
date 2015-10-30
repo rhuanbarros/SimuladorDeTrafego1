@@ -21,17 +21,18 @@ public class Carro extends Entidade {
 	
 	public void doMovimento() {
 		int auxX=0;
-		boolean podeMovimentar=false;
 		
 		if(direcao == DirecaoEnum.DIREITA) {
 			auxX=x;
 			auxX++;
 			Lugar proximoLugar = tela[auxX][y];
-			if( proximoLugar.hasControleSinaleira() )
-				if( proximoLugar.getControleSinaleira().getCorSinal() == CorEnum.VERDE ) podeMovimentar=true;
-			if( !proximoLugar.hasCarro() ) podeMovimentar=true;
-			
-			if(podeMovimentar == true ) x++; 
+			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+			if( proximoLugarNaoTemCarro ) { 
+				if( proximoLugar.hasSinaleira() ) {
+					System.out.println("Carro encontrou ControleSinaleira!");
+					if( proximoLugar.getSinaleira().getCorSinal() == CorEnum.VERDE ) x++;
+				} else x++;
+			}
 		}
 		
 	}

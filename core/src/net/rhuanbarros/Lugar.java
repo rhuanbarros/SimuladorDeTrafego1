@@ -5,7 +5,7 @@ public class Lugar {
 	private int y;
 	private int tamanhoBloco;
 	private Carro carro;
-	private ControleSinaleira controleSinaleira;
+	private Sinaleira sinaleira;
 		
 	
 	public Lugar(int x, int y, int tamanhoBloco) {
@@ -56,20 +56,20 @@ public class Lugar {
 		carro = null;
 	}
 
-	public ControleSinaleira getControleSinaleira() {
-		return controleSinaleira;
+	public Sinaleira getSinaleira() {
+		return sinaleira;
 	}
 
-	public void setControleSinaleira(ControleSinaleira controleSinaleira) {
-		this.controleSinaleira = controleSinaleira;
+	public void setSinaleira(Sinaleira sinaleira) {
+		this.sinaleira = sinaleira;
 	}
 	
-	public boolean hasControleSinaleira() {
-		if( controleSinaleira == null ) return false;
+	public boolean hasSinaleira() {
+		if( sinaleira == null ) return false;
 		else return true;
 	}
 	
-	public void setNullControleSinaleira() {
-		controleSinaleira = null;
+	public void setNullSinaleira() {
+		sinaleira = null;
 	}
 }

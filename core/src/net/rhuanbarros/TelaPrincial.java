@@ -12,7 +12,7 @@ public class TelaPrincial extends ScreenAdapter {
 	private float timer = MOVE_TIME;
 	
 	private Carro carro1;
-	private ControleSinaleira sinaleira1;
+	private Sinaleira sinaleira1;
 	private Lugar[][] tela;
 	
 	private SpriteBatch batch;
@@ -24,8 +24,8 @@ public class TelaPrincial extends ScreenAdapter {
 		tela[carro.getX()][carro.getY()].setCarro(carro);
 	}
 	
-	public void setControleSinaleiraTela(ControleSinaleira controleSinaleira) {
-		tela[controleSinaleira.getX()][controleSinaleira.getY()].setControleSinaleira(controleSinaleira);
+	public void setSinaleiraTela(Sinaleira sinaleira) {
+		tela[sinaleira.getX()][sinaleira.getY()].setSinaleira(sinaleira);
 	}
 
     @Override
@@ -42,8 +42,8 @@ public class TelaPrincial extends ScreenAdapter {
         carro1 = new Carro(0,0, DirecaoEnum.DIREITA, carroTextura, tela);
         setCarroTela(carro1);
         
-        sinaleira1 = new ControleSinaleira(15, 0, CorEnum.VERMELHO, carroTextura);
-        setControleSinaleiraTela(sinaleira1);
+        sinaleira1 = new Sinaleira(15, 0, CorEnum.VERMELHO, carroTextura);
+        setSinaleiraTela(sinaleira1);
     }
     
     @Override
