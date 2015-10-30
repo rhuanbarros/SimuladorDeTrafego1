@@ -1,5 +1,6 @@
 package net.rhuanbarros;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public abstract class Entidade {
@@ -11,8 +12,8 @@ public abstract class Entidade {
 		return textura;
 	}
 
-	public void setTextura(Texture textura) {
-		this.textura = textura;
+	public void setTextura(String nomeArquivo) {
+		this.textura = new Texture(Gdx.files.internal(nomeArquivo));
 	}
 	
 	public int getX() {

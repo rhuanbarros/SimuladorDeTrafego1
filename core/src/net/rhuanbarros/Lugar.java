@@ -6,6 +6,7 @@ public class Lugar {
 	private int tamanhoBloco;
 	private Carro carro;
 	private Sinaleira sinaleira;
+	private Calcada calcada;
 		
 	
 	public Lugar(int x, int y, int tamanhoBloco) {
@@ -71,5 +72,22 @@ public class Lugar {
 	
 	public void setNullSinaleira() {
 		sinaleira = null;
+	}
+
+	public Calcada getCalcada() {
+		return calcada;
+	}
+
+	public void setCalcada(Calcada calcada) {
+		this.calcada = calcada;
+	}
+	
+	public boolean hasCalcada() {
+		if( calcada == null )return false;
+		else return true;
+	}
+	
+	public void setNullCalcada() {
+		calcada = null;
 	}
 }
