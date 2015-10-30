@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TelaPrincial extends ScreenAdapter {
 	private static final float MOVE_TIME = 0.5F;
-	//private static final float MOVE_TIME = 0.1F;
 	private float timer = MOVE_TIME;
 	
 	private Carro carro1;
@@ -20,6 +19,14 @@ public class TelaPrincial extends ScreenAdapter {
     private Texture carroTextura;
 	private int tamanhoTelaX = 20;
 	private int tamanhoTelaY = 15;
+	
+	public void setCarroTela(Carro carro) {
+		tela[carro.getX()][carro.getY()].setCarro(carro);
+	}
+	
+	public void setControleSinaleiraTela(ControleSinaleira controleSinaleira) {
+		tela[controleSinaleira.getX()][controleSinaleira.getY()].setControleSinaleira(controleSinaleira);
+	}
 
     @Override
     public void show() {
@@ -30,13 +37,13 @@ public class TelaPrincial extends ScreenAdapter {
         tela = new Lugar[tamanhoTelaX][tamanhoTelaY];
         for(int i=0;i<tamanhoTelaX;i++)
         	for(int j=0;j<tamanhoTelaY;j++)
-        		tela[i][j] = new Lugar(i,j);
+        		tela[i][j] = new Lugar(i,j, 32);
         		
         carro1 = new Carro(0,0, DirecaoEnum.DIREITA, carroTextura, tela);
-        tela[0][0].setEntidadeMovimentavel(carro1);
+        setCarroTela(carro1);
         
-        //sinaleira1 = new ControleSinaleira(CorEnum.VERMELHO, carroTextura);
-        //tela[15][0].setEntidade(sinaleira1);
+        sinaleira1 = new ControleSinaleira(15, 0, CorEnum.VERMELHO, carroTextura);
+        setControleSinaleiraTela(sinaleira1);
     }
     
     @Override
@@ -46,24 +53,16 @@ public class TelaPrincial extends ScreenAdapter {
         timer -= delta;
         if (timer <= 0) {
             timer = MOVE_TIME;
-
-			//implementar uma interface IMovimentavel que tem o metodo doMovimento()
             
             System.out.println("Entrou no loop principal");
-            
+            //PARTE QUE FAZ CARRO SE MOVIMENTAREM
         	for(int i=0;i<tamanhoTelaX;i++) {
             	for(int j=0;j<tamanhoTelaY;j++) {
     				Lugar lugarEmQuestao = tela[i][j];
     				//System.out.println("x: "+i+" y: "+j);
-    				if( lugarEmQuestao.hasEntidade() ) { 
-    					System.out.println("LOOP PRINCIPAL | entidade x: "+i+" y: "+j);
-    					//System.out.println(lugarEmQuestao.getEntidade() instanceof Carro);
-    					/*if( lugarEmQuestao.getEntidade() instanceof Carro ) {
-    						//System.out.println("foi2222");
-    						( (Carro) lugarEmQuestao.getEntidade()).doMovimento();
-    					}*/
-    					
-    					carro1.doMovimento();
+    				if( lugarEmQuestao.hasCarro() ) { 
+    					//System.out.println("LOOP PRINCIPAL | entidade x: "+i+" y: "+j);
+   						lugarEmQuestao.getCarro().doMovimento();
     				}
             	}
         	}
@@ -81,15 +80,15 @@ public class TelaPrincial extends ScreenAdapter {
         	for(int j=0;j<tamanhoTelaY;j++) {
 				Lugar lugarEmQuestao = tela[i][j];
 
-				if( lugarEmQuestao.hasEntidade() ) {
+				if( lugarEmQuestao.hasCarro() ) {
 					//System.out.println("LOOP atualizaMovimentosNaTela | entidade x: "+i+" y: "+j);
-        			int entidadeX = lugarEmQuestao.getEntidadeMovimentavel().getX();
-					int entidadeY = lugarEmQuestao.getEntidadeMovimentavel().getY();
+        			int entidadeX = lugarEmQuestao.getCarro().getX();
+					int entidadeY = lugarEmQuestao.getCarro().getY();
 					boolean mudouDePosicao = entidadeX != i || entidadeY != j;
 					
 					if( mudouDePosicao ){
-        				tela[entidadeX][entidadeY].setEntidade(lugarEmQuestao.getEntidade());
-        				lugarEmQuestao.setNullEntidade();
+        				tela[entidadeX][entidadeY].setCarro(lugarEmQuestao.getCarro());
+        				lugarEmQuestao.setNullCarro();
 					}
         		}
 			}
@@ -100,8 +99,9 @@ public class TelaPrincial extends ScreenAdapter {
         for(int i=0;i<tamanhoTelaX;i++)
         	for(int j=0;j<tamanhoTelaY;j++) {
 				Lugar lugarEmQuestao = tela[i][j];
-				if( lugarEmQuestao.hasEntidade() )
-        			batch.draw(lugarEmQuestao.getEntidade().getTextura(), lugarEmQuestao.getX(), lugarEmQuestao.getY());
+				if( lugarEmQuestao.hasCarro() )
+        			batch.draw(lugarEmQuestao.getCarro().getTextura(), lugarEmQuestao.getX(), lugarEmQuestao.getY());
+					//fazer o mesmo aqui para o controle sinaleira 
 			}
         batch.end();
     }

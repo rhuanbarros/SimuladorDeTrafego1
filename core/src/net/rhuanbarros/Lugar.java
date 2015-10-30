@@ -1,15 +1,20 @@
 package net.rhuanbarros;
 
 public class Lugar {
-	private IMovimentavel entidadeMovimentavel=null;
 	private int x;
 	private int y;
+	private int tamanhoBloco;
+	private Carro carro;
+	private ControleSinaleira controleSinaleira;
+		
 	
-	public Lugar(int x, int y) {
+	public Lugar(int x, int y, int tamanhoBloco) {
 		this.x = x;
 		this.y = y;
+		this.tamanhoBloco = tamanhoBloco;
 	}
 	
+	/*
 	public boolean canOcupar() {
 		boolean retorno=true;
 		/*
@@ -22,32 +27,49 @@ public class Lugar {
 				if( ( (ControleSinaleira) entidade).getCorSinal() == CorEnum.VERDE )
 					retorno = true;
 		}*/
-		
+		/*
 		return retorno;
-	}
-
-	public IMovimentavel getEntidadeMovimentavel() {
-		return entidadeMovimentavel;
-	}
-
-	public void setEntidadeMovimentavel(IMovimentavel entidadeM) {
-		this.entidadeMovimentavel = entidadeM;
-	}
-	
-	public boolean hasEntidade() {
-		if(entidadeMovimentavel==null) return false;
-		else return true;
-	}
-	
-	public void setNullEntidade() {
-		entidadeMovimentavel = null;
-	}
+	}*/
 
 	public int getX() {
-		return x*32;
+		return x*tamanhoBloco;
 	}
 
 	public int getY() {
-		return y*32;
+		return y*tamanhoBloco;
+	}
+
+	public Carro getCarro() {
+		return carro;
+	}
+
+	public void setCarro(Carro carro) {
+		this.carro = carro;
+	}
+	
+	public boolean hasCarro() {
+		if( carro == null ) return false;
+		else return true;
+	}
+	
+	public void setNullCarro() {
+		carro = null;
+	}
+
+	public ControleSinaleira getControleSinaleira() {
+		return controleSinaleira;
+	}
+
+	public void setControleSinaleira(ControleSinaleira controleSinaleira) {
+		this.controleSinaleira = controleSinaleira;
+	}
+	
+	public boolean hasControleSinaleira() {
+		if( controleSinaleira == null ) return false;
+		else return true;
+	}
+	
+	public void setNullControleSinaleira() {
+		controleSinaleira = null;
 	}
 }

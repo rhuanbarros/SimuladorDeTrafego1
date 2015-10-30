@@ -2,7 +2,7 @@ package net.rhuanbarros;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class Carro extends Entidade implements IMovimentavel {
+public class Carro extends Entidade {
 	private DirecaoEnum direcao;
 	private Lugar[][] tela=null;
 	
@@ -21,17 +21,19 @@ public class Carro extends Entidade implements IMovimentavel {
 	
 	public void doMovimento() {
 		int auxX=0;
+		boolean podeMovimentar=false;
 		
-		/*if(direcao == DirecaoEnum.DIREITA) {
+		if(direcao == DirecaoEnum.DIREITA) {
 			auxX=x;
 			auxX++;
 			Lugar proximoLugar = tela[auxX][y];
-			if( proximoLugar.hasEntidade() )
-				if( proximoLugar.canOcupar() )
-					x++;
-		}*/
-		x++;
-		System.out.println("x do carro"+x);
+			if( proximoLugar.hasControleSinaleira() )
+				if( proximoLugar.getControleSinaleira().getCorSinal() == CorEnum.VERDE ) podeMovimentar=true;
+			if( !proximoLugar.hasCarro() ) podeMovimentar=true;
+			
+			if(podeMovimentar == true ) x++; 
+		}
+		
 	}
 
 	public DirecaoEnum getDirecao() {
