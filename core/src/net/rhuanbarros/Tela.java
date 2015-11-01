@@ -17,73 +17,53 @@ public class Tela {
 		inicializaTela( abrirMapaDeArquivo(mapa) );
 	}
 	
-	public boolean carroPodeAndar(Carro carro, DirecaoEnum direcao) {
+	public boolean carroPodeAndar(Carro carro) {
 		int x = carro.getX();
 		int y = carro.getY();
-		int auxX=0;
-		int auxY=0;
+		DirecaoEnum direcao = carro.getDirecao();
+		int auxX=x;
+		int auxY=y;
 		boolean retorno = false;
-		try {
-			if(direcao == DirecaoEnum.DIREITA) {
-				auxX=x;
-				auxX++;
-				Lugar proximoLugar = tela[auxX][y];
-				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) {
-					Lugar lugarAtual = tela[x][y];
-					if( lugarAtual.hasSinaleira() ) {
-						System.out.println("Carro encontrou Sinaleira!");
-						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
-					} else retorno = true;
-				}
-			}
-			if(direcao == DirecaoEnum.ESQUERDA) {
-				auxX=x;
-				auxX--;
-				Lugar proximoLugar = tela[auxX][y];
-				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-					Lugar lugarAtual = tela[x][y];
-					if( lugarAtual.hasSinaleira() ) {
-						System.out.println("Carro encontrou Sinaleira!");
-						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
-					} else retorno = true;
-				}
-			}
-			if(direcao == DirecaoEnum.CIMA) {
-				auxY=y;
-				auxY++;
-				Lugar proximoLugar = tela[x][auxY];
-				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-					Lugar lugarAtual = tela[x][y];
-					if( lugarAtual.hasSinaleira() ) {
-						System.out.println("Carro encontrou Sinaleira!");
-						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
-					} else retorno = true;
-				}
-			}
-			if(direcao == DirecaoEnum.BAIXO) {
-				auxY=y;
-				auxY--;
-				Lugar proximoLugar = tela[x][auxY];
-				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-					Lugar lugarAtual = tela[x][y];
-					if( lugarAtual.hasSinaleira() ) {
-						System.out.println("Carro encontrou Sinaleira!");
-						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
-					} else retorno = true;
-				}
-			}
-		} catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println("MORREUMORREUMORREUMORREUMORREUMORREU");
-		}
 		
+		if(direcao == DirecaoEnum.DIREITA) {
+			auxX++;
+			retorno = detectorDeColisoes(x, y, auxX, auxY);
+		}
+		if(direcao == DirecaoEnum.ESQUERDA) {
+			auxX--;
+			retorno = detectorDeColisoes(x, y, auxX, auxY);
+		}
+		if(direcao == DirecaoEnum.CIMA) {
+			auxY++;
+			retorno = detectorDeColisoes(x, y, auxX, auxY);
+		}
+		if(direcao == DirecaoEnum.BAIXO) {
+			auxY--;
+			retorno = detectorDeColisoes(x, y, auxX, auxY);
+		}
+		return retorno;
+	}
+	
+	//retorna true se pode andar
+	private boolean detectorDeColisoes(int x, int y, int auxX, int auxY) {
+		boolean retorno = false;
+		
+		if( auxX < tamanhoTelaX && auxX >= 0 && auxY < tamanhoTelaY && auxY >= 0 ) {
+			//System.out.printf("auxX: %d tamanhoTelaX: %d auxY: %d tamanhoTelaY: %d ", auxX, tamanhoTelaX, auxY, tamanhoTelaY);
+			Lugar proximoLugar = tela[auxX][auxY];
+			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
+			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) {
+				Lugar lugarAtual = tela[x][y];
+				if( lugarAtual.hasSinaleira() ) {
+					//System.out.println("Carro encontrou Sinaleira!");
+					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
+				} else retorno = true;
+			}
+		} else {
+			Lugar lugarAtual = tela[x][y];
+			lugarAtual.setNullCarro();
+		}
 		return retorno;
 	}
 	
@@ -100,11 +80,11 @@ public class Tela {
 	    try {
 	      BufferedReader in  = new BufferedReader(new FileReader(nomeArquivo));      
 	      while( (linha = in.readLine()) != null ) {
-	    	  System.out.printf("\ny:[%d]", linhaCont);
+	    	 //System.out.printf("\ny:[%d]", linhaCont);
 	    	  for(int i=0;i<linha.length();i++) {
 	    		  char letra = linha.charAt(i);
 	    		  mapa[i][linhaCont]=letra;
-	    		  System.out.printf("[%d]%c", i, letra);
+	    		  //System.out.printf("[%d]%c", i, letra);
 	    	  }
 	    	  linhaCont--;
 	      }      
@@ -167,8 +147,7 @@ public class Tela {
 	}
 	
 	public void atualizaNaTela() {
-    	
-    	for(int i=0;i<getTamanhoTelaX();i++)
+		for(int i=0;i<getTamanhoTelaX();i++)
         	for(int j=0;j<getTamanhoTelaY();j++) {
 				Lugar lugarEmQuestao = tela[i][j];
 				if( lugarEmQuestao.hasSinaleira() ) lugarEmQuestao.getSinaleira().controlaTempo();

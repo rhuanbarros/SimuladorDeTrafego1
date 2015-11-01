@@ -13,7 +13,7 @@ public class Carro extends Entidade {
 	}
 
 	public void doMovimento() {
-		if( tela.carroPodeAndar(this, direcao) ) {	
+		if( tela.carroPodeAndar(this) ) {	
 			if(direcao == DirecaoEnum.DIREITA) x++;
 			if(direcao == DirecaoEnum.ESQUERDA) x--;
 			if(direcao == DirecaoEnum.CIMA) y++;
