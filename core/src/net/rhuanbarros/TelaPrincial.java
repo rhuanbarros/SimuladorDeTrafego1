@@ -73,40 +73,42 @@ public class TelaPrincial extends ScreenAdapter {
         			calcada = new Calcada(i,j);
         			setCalcadaTela(calcada);
         		} else
-        		if(charEmQuestao == '3') { //CARRO
+        		if(charEmQuestao == '3') { //SINALEIRA VERMELHA
+        			sinaleira = new Sinaleira(i, j, CorEnum.VERMELHO);
+        			setSinaleiraTela(sinaleira);
+        		} else
+    			if(charEmQuestao == '4') { //SINALEIRA AMARELA
+        			sinaleira = new Sinaleira(i, j, CorEnum.AMARELO);
+        			setSinaleiraTela(sinaleira);
+        		} else
+    			if(charEmQuestao == '5') { //SINALEIRA VERDE
+        			sinaleira = new Sinaleira(i, j, CorEnum.VERDE);
+        			setSinaleiraTela(sinaleira);
+        		} else
+    			if(charEmQuestao == '6') { //CARRO
         			carro = new Carro(i,j, DirecaoEnum.DIREITA, tela);
         			setCarroTela(carro);
         		} else
-        		if(charEmQuestao == '4') { //SINALEIRA
-        			sinaleira = new Sinaleira(i, j, CorEnum.VERMELHO);
-        			setSinaleiraTela(sinaleira);
+    			if(charEmQuestao == '7') { //CARRO
+        			carro = new Carro(i,j, DirecaoEnum.CIMA, tela);
+        			setCarroTela(carro);
+        		} else
+    			if(charEmQuestao == '8') { //CARRO
+        			carro = new Carro(i,j, DirecaoEnum.ESQUERDA, tela);
+        			setCarroTela(carro);
+        		} else
+    			if(charEmQuestao == '9') { //CARRO
+        			carro = new Carro(i,j, DirecaoEnum.BAIXO, tela);
+        			setCarroTela(carro);
         		}
         	}
-        
-        
-        /*carro1 = new Carro(0,0, DirecaoEnum.DIREITA, tela);
-        setCarroTela(carro1);
-        carro5 = new Carro(1,0, DirecaoEnum.DIREITA, tela);
-        setCarroTela(carro5);
-        calcada1 =new Calcada(5,0);
-        setCalcadaTela(calcada1);
-        
-        carro2 = new Carro(31,1, DirecaoEnum.ESQUERDA, tela);
-        setCarroTela(carro2);
-        carro3 = new Carro(5,23, DirecaoEnum.BAIXO, tela);
-        setCarroTela(carro3);
-        //carro4 = new Carro(18,0, DirecaoEnum.CIMA, tela);
-        //setCarroTela(carro4);
-        
-        sinaleira1 = new Sinaleira(15, 0, CorEnum.VERMELHO);
-        setSinaleiraTela(sinaleira1);*/
 	}
 
     @Override
     public void show() {
         super.show();
         batch = new SpriteBatch();
-        inicializaTela( abrirMapaDeArquivo("C:\\Users\\rhuan\\OneDrive\\Facul 2015-2\\LP2\\trabalho final\\SimuladorDeTrafego1\\core\\Mapa3.mapa") );
+        inicializaTela( abrirMapaDeArquivo("C:\\Users\\rhuan\\OneDrive\\Facul 2015-2\\LP2\\trabalho final\\SimuladorDeTrafego1\\core\\Mapa4.mapa") );
         //inicializaTela( abrirMapaDeArquivo("Mapa3.mapa") );
     }
     
@@ -135,7 +137,7 @@ public class TelaPrincial extends ScreenAdapter {
         clearScreen();
         draw();
     }
-    
+   
     void atualizaNaTela() {
     	
     	for(int i=0;i<tamanhoTelaX;i++)

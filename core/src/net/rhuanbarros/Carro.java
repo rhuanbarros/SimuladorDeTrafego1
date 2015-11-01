@@ -32,62 +32,65 @@ public class Carro extends Entidade {
 	public void doMovimento() {
 		int auxX=0;
 		int auxY=0;
-		
-		if(direcao == DirecaoEnum.DIREITA) {
-			auxX=x;
-			auxX++;
-			Lugar proximoLugar = tela[auxX][y];
-			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-				Lugar lugarAtual = tela[x][y];
-				if( lugarAtual.hasSinaleira() ) {
-					System.out.println("Carro encontrou Sinaleira!");
-					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) x++;
-				} else x++;
+		try {
+			if(direcao == DirecaoEnum.DIREITA) {
+				auxX=x;
+				auxX++;
+				Lugar proximoLugar = tela[auxX][y];
+				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
+				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) {
+					Lugar lugarAtual = tela[x][y];
+					if( lugarAtual.hasSinaleira() ) {
+						System.out.println("Carro encontrou Sinaleira!");
+						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) x++;
+					} else x++;
+				}
 			}
-		}
-		if(direcao == DirecaoEnum.ESQUERDA) {
-			auxX=x;
-			auxX--;
-			Lugar proximoLugar = tela[auxX][y];
-			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-				Lugar lugarAtual = tela[x][y];
-				if( lugarAtual.hasSinaleira() ) {
-					System.out.println("Carro encontrou Sinaleira!");
-					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) x--;
-				} else x--;
+			if(direcao == DirecaoEnum.ESQUERDA) {
+				auxX=x;
+				auxX--;
+				Lugar proximoLugar = tela[auxX][y];
+				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
+				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
+					Lugar lugarAtual = tela[x][y];
+					if( lugarAtual.hasSinaleira() ) {
+						System.out.println("Carro encontrou Sinaleira!");
+						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) x--;
+					} else x--;
+				}
 			}
-		}
-		if(direcao == DirecaoEnum.CIMA) {
-			auxY=y;
-			auxY++;
-			Lugar proximoLugar = tela[x][auxY];
-			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-				Lugar lugarAtual = tela[x][y];
-				if( lugarAtual.hasSinaleira() ) {
-					System.out.println("Carro encontrou Sinaleira!");
-					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) y++;
-				} else y++;
+			if(direcao == DirecaoEnum.CIMA) {
+				auxY=y;
+				auxY++;
+				Lugar proximoLugar = tela[x][auxY];
+				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
+				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
+					Lugar lugarAtual = tela[x][y];
+					if( lugarAtual.hasSinaleira() ) {
+						System.out.println("Carro encontrou Sinaleira!");
+						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) y++;
+					} else y++;
+				}
 			}
-		}
-		if(direcao == DirecaoEnum.BAIXO) {
-			auxY=y;
-			auxY--;
-			Lugar proximoLugar = tela[x][auxY];
-			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
-			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
-			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
-				Lugar lugarAtual = tela[x][y];
-				if( lugarAtual.hasSinaleira() ) {
-					System.out.println("Carro encontrou Sinaleira!");
-					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) y--;
-				} else y--;
+			if(direcao == DirecaoEnum.BAIXO) {
+				auxY=y;
+				auxY--;
+				Lugar proximoLugar = tela[x][auxY];
+				boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
+				boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
+				if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) { 
+					Lugar lugarAtual = tela[x][y];
+					if( lugarAtual.hasSinaleira() ) {
+						System.out.println("Carro encontrou Sinaleira!");
+						if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) y--;
+					} else y--;
+				}
 			}
+		} catch(ArrayIndexOutOfBoundsException e) {
+			System.out.println("MORREUMORREUMORREUMORREUMORREUMORREU");
 		}
 		
 	}
