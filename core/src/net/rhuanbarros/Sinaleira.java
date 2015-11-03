@@ -17,7 +17,7 @@ public class Sinaleira extends Entidade {
 		if( corSinal == CorEnum.VERDE)
 			if( tempo != tempoVerde ) tempo++;
 			else { 
-				System.out.println("mudou pra amarelo");
+				//System.out.println("mudou pra amarelo");
 				setCorSinal( CorEnum.AMARELO );
 				tempo=0;
 				return;
@@ -25,7 +25,7 @@ public class Sinaleira extends Entidade {
 		if( corSinal == CorEnum.AMARELO)
 			if( tempo != tempoAmarelo ) tempo++;
 			else {
-				System.out.println("mudou pra vermelho");
+				//System.out.println("mudou pra vermelho");
 				setCorSinal( CorEnum.VERMELHO );
 				tempo=0;
 				return;
@@ -33,7 +33,7 @@ public class Sinaleira extends Entidade {
 		if( corSinal == CorEnum.VERMELHO)
 			if( tempo != tempoVermelho ) tempo++;
 			else { 
-				System.out.println("mudou pra verde");
+				//System.out.println("mudou pra verde");
 				setCorSinal( CorEnum.VERDE );
 				tempo=0;
 				return;

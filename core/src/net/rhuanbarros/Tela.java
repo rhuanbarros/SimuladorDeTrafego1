@@ -18,50 +18,50 @@ public class Tela {
 	}
 	
 	public boolean carroPodeAndar(Carro carro) {
-		int x = carro.getX();
-		int y = carro.getY();
+		int xAtual = carro.getX();
+		int yAtual = carro.getY();
 		DirecaoEnum direcao = carro.getDirecao();
-		int auxX=x;
-		int auxY=y;
+		int xProximo=xAtual;
+		int yProximo=yAtual;
 		boolean retorno = false;
 		
 		if(direcao == DirecaoEnum.DIREITA) {
-			auxX++;
-			retorno = detectorDeColisoes(x, y, auxX, auxY);
+			xProximo++;
+			retorno = detectorDeColisoes(xAtual, yAtual, xProximo, yProximo);
 		}
 		if(direcao == DirecaoEnum.ESQUERDA) {
-			auxX--;
-			retorno = detectorDeColisoes(x, y, auxX, auxY);
+			xProximo--;
+			retorno = detectorDeColisoes(xAtual, yAtual, xProximo, yProximo);
 		}
 		if(direcao == DirecaoEnum.CIMA) {
-			auxY++;
-			retorno = detectorDeColisoes(x, y, auxX, auxY);
+			yProximo++;
+			retorno = detectorDeColisoes(xAtual, yAtual, xProximo, yProximo);
 		}
 		if(direcao == DirecaoEnum.BAIXO) {
-			auxY--;
-			retorno = detectorDeColisoes(x, y, auxX, auxY);
+			yProximo--;
+			retorno = detectorDeColisoes(xAtual, yAtual, xProximo, yProximo);
 		}
 		return retorno;
 	}
 	
 	//retorna true se pode andar
-	private boolean detectorDeColisoes(int x, int y, int auxX, int auxY) {
+	private boolean detectorDeColisoes(int xAtual, int yAtual, int xProximo, int yProximo) {
 		boolean retorno = false;
 		
-		if( auxX < tamanhoTelaX && auxX >= 0 && auxY < tamanhoTelaY && auxY >= 0 ) {
+		if( xProximo < tamanhoTelaX && xProximo >= 0 && yProximo < tamanhoTelaY && yProximo >= 0 ) {
 			//System.out.printf("auxX: %d tamanhoTelaX: %d auxY: %d tamanhoTelaY: %d ", auxX, tamanhoTelaX, auxY, tamanhoTelaY);
-			Lugar proximoLugar = tela[auxX][auxY];
+			Lugar proximoLugar = tela[xProximo][yProximo];
 			boolean proximoLugarNaoTemCarro = !proximoLugar.hasCarro();
 			boolean proximoLugarNaoTemCalcada = !proximoLugar.hasCalcada();
 			if( proximoLugarNaoTemCarro && proximoLugarNaoTemCalcada ) {
-				Lugar lugarAtual = tela[x][y];
+				Lugar lugarAtual = tela[xAtual][yAtual];
 				if( lugarAtual.hasSinaleira() ) {
 					//System.out.println("Carro encontrou Sinaleira!");
 					if( lugarAtual.getSinaleira().getCorSinal() == CorEnum.VERDE ) retorno = true;
 				} else retorno = true;
 			}
 		} else {
-			Lugar lugarAtual = tela[x][y];
+			Lugar lugarAtual = tela[xAtual][yAtual];
 			lugarAtual.setNullCarro();
 		}
 		return retorno;
@@ -101,12 +101,13 @@ public class Tela {
 		Calcada calcada=null;
 		Carro carro=null;
 		Sinaleira sinaleira=null;
+		CriadorDeCarros criadorDeCarros=null; 
 		
 		tela = new Lugar[getTamanhoTelaX()][getTamanhoTelaY()];
         
 		for(int i=0;i<getTamanhoTelaX();i++)
         	for(int j=0;j<getTamanhoTelaY();j++)
-        		tela[i][j] = new Lugar(i,j, getTamanhoQuadrado());
+        		tela[i][j] = new Lugar(i,j, getTamanhoQuadrado(), this);
         		
 		for(int i=0;i<getTamanhoTelaX();i++)
         	for(int j=0;j<getTamanhoTelaY();j++) {
@@ -128,9 +129,14 @@ public class Tela {
         			setSinaleiraTela(sinaleira);
         		} else
     			if(charEmQuestao == '6') { //CARRO
-        			carro = new Carro(i,j, DirecaoEnum.DIREITA, this);
-        			setCarroTela(carro);
-        		} else
+        			//carro = new Carro(i,j, DirecaoEnum.DIREITA, this);
+        			//setCarroTela(carro);
+    				System.out.println("cria criador de carro"+i+" "+j);
+    				criadorDeCarros = new CriadorDeCarros(i, j, 6, this);
+    				getLugarEmQuestao(criadorDeCarros).setCriadorDeCarros(criadorDeCarros);
+    				//setCriadorDeCarros(criadorDeCarros);
+        		}
+    			/*else
     			if(charEmQuestao == '7') { //CARRO
         			carro = new Carro(i,j, DirecaoEnum.CIMA, this);
         			setCarroTela(carro);
@@ -142,7 +148,7 @@ public class Tela {
     			if(charEmQuestao == '9') { //CARRO
         			carro = new Carro(i,j, DirecaoEnum.BAIXO, this);
         			setCarroTela(carro);
-        		}
+        		}*/
         	}
 	}
 	
@@ -164,6 +170,14 @@ public class Tela {
         		}
 			}
     }
+	
+	public Lugar getLugarEmQuestao(Entidade entidade) {
+		return tela[entidade.getX()][entidade.getY()];
+	}
+	
+	public void setCriadorDeCarros(CriadorDeCarros criadorDeCarros) {
+		tela[criadorDeCarros.getX()][criadorDeCarros.getY()].setCriadorDeCarros(criadorDeCarros);
+	}
 	
     public void setCarroTela(Carro carro) {
 		tela[carro.getX()][carro.getY()].setCarro(carro);

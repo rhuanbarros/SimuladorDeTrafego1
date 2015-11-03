@@ -7,31 +7,37 @@ public class Lugar {
 	private Carro carro;
 	private Sinaleira sinaleira;
 	private Calcada calcada;
-		
-	
-	public Lugar(int x, int y, int tamanhoBloco) {
+	private CriadorDeCarros criadorDeCarros;
+	private Tela tela;
+
+	public Lugar(int x, int y, int tamanhoBloco, Tela tela) {
 		this.x = x;
 		this.y = y;
 		this.tamanhoBloco = tamanhoBloco;
+		this.tela = tela;
 	}
 	
-	/*
-	public boolean canOcupar() {
-		boolean retorno=true;
-		/*
-		if( entidade == null ) {
-			retorno = true;
-		} else {
-			if( entidade instanceof Carro )
-				retorno = false;
-			if( entidade instanceof ControleSinaleira)
-				if( ( (ControleSinaleira) entidade).getCorSinal() == CorEnum.VERDE )
-					retorno = true;
-		}*/
-		/*
+	public DirecaoEnum getDirecaoRua() {
+		DirecaoEnum retorno = DirecaoEnum.CIMA;
+		int xEsquerdo = x--;
+		int xDireito = x++;
+		int yCima = y--;
+		int yBaixo = y++;
+		
+		if( tela.getLugar(x, yBaixo).hasCalcada()) retorno = DirecaoEnum.DIREITA;
+		
 		return retorno;
-	}*/
-
+	}
+	
+	public boolean hasCriadorDeCarros() {
+		if( criadorDeCarros == null ) return false;
+		else return true;
+	}
+	
+	public void setNullCriadorDeCarros() {
+		criadorDeCarros = null;
+	}
+	
 	public int getX() {
 		return x*tamanhoBloco;
 	}
@@ -89,5 +95,13 @@ public class Lugar {
 	
 	public void setNullCalcada() {
 		calcada = null;
+	}
+
+	public CriadorDeCarros getCriadorDeCarros() {
+		return criadorDeCarros;
+	}
+
+	public void setCriadorDeCarros(CriadorDeCarros criadorDeCarros) {
+		this.criadorDeCarros = criadorDeCarros;
 	}
 }
